@@ -35,11 +35,15 @@ public struct FileUtils {
         }
 
         let executableUrl = URL(fileURLWithPath: executablePath)
+        #if os(Linux)
+        return executableUrl.deletingLastPathComponent().path
+        #else
         if let isAliasFile = try! executableUrl.resourceValues(forKeys: [URLResourceKey.isAliasFileKey]).isAliasFile, isAliasFile {
             return try! URL(resolvingAliasFileAt: executableUrl).deletingLastPathComponent().path
         } else {
             return executableUrl.deletingLastPathComponent().path
         }
+        #endif
     }
 
     /// The path where Infofile.swift is located.
