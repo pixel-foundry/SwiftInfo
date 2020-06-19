@@ -36,6 +36,10 @@ public struct Main {
     }
 
     static func getToolchainPath() -> String {
+        let oneLined: String
+        #if os(Linux)
+        oneLined = "/usr/lib/libsourcekitdInProc.so"
+        #else
         let task = Process()
         task.launchPath = "/bin/bash"
         task.arguments = ["-c", "xcode-select -p"]
@@ -47,8 +51,10 @@ public struct Main {
         guard let developer = String(data: data, encoding: .utf8), developer.isEmpty == false else {
             fail("Xcode toolchain path not found. (xcode-select -p)")
         }
-        let oneLined = developer.replacingOccurrences(of: "\n", with: "")
-        return oneLined + "/Toolchains/XcodeDefault.xctoolchain/usr/lib/sourcekitd.framework/sourcekitd"
+        oneLined = developer.replacingOccurrences(of: "\n", with: "") +
+            "/Toolchains/XcodeDefault.xctoolchain/usr/lib/sourcekitd.framework/sourcekitd"
+        #endif
+        return oneLined
     }
 }
 
