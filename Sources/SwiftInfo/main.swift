@@ -38,7 +38,7 @@ public struct Main {
     static func getToolchainPath() -> String {
         let oneLined: String
         #if os(Linux)
-        oneLined = "/usr/lib/libsourcekitdInProc.so"
+        oneLined = "/usr/share/swift/usr/lib/libsourcekitdInProc.so"
         #else
         let task = Process()
         task.launchPath = "/bin/bash"
