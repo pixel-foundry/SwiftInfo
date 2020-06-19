@@ -8,15 +8,14 @@ public enum Runner {
         return [
             "swiftc",
             "--driver-mode=swift", // Don't generate a binary, just run directly.
+            "-gnone",
             "-L", // Link with SwiftInfoCore manually.
             include,
             "-I",
             include,
             "-lSwiftInfoCore",
             "-Xcc",
-            "-fmodule-map-file=\(include)/Csourcekitd/include/module.modulemap",
             "-I",
-            "\(include)/Csourcekitd/include",
             (try! fileUtils.infofileFolder()) + "Infofile.swift",
             "-toolchain",
             "\(toolchainPath)",

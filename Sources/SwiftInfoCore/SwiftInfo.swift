@@ -11,26 +11,16 @@ public struct SwiftInfo {
     /// A HTTP Client that sends synchronous POST requests.
     public let client: HTTPClient
 
-    /// An instance of SourceKit.
-    public let sourceKit: SourceKit
-
     let slackFormatter: SlackFormatter
 
     public init(projectInfo: ProjectInfo,
                 fileUtils: FileUtils = .init(),
                 slackFormatter: SlackFormatter = .init(),
-                client: HTTPClient = .init(),
-                sourceKit: SourceKit? = nil) {
+                client: HTTPClient = .init()) {
         self.projectInfo = projectInfo
         self.fileUtils = fileUtils
         self.slackFormatter = slackFormatter
         self.client = client
-        if let sourceKit = sourceKit {
-            self.sourceKit = sourceKit
-        } else {
-            let toolchain = UserDefaults.standard.string(forKey: "toolchain") ?? ""
-            self.sourceKit = SourceKit(path: toolchain)
-        }
     }
 
     /// Executes a provider with an optional set of additional arguments.
