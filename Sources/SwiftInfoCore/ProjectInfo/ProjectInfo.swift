@@ -39,7 +39,7 @@ public struct ProjectInfo: CustomStringConvertible {
     func plistDict() throws -> [String: Any] {
         let folder = try fileUtils.infofileFolder()
         guard let dictionary = fileUtils.fileOpener.plistContents(ofPath: folder + plistPath) else {
-            fail("Failed to load plist \(folder + plistPath)")
+            throw SwiftInfoError.generic("Failed to load plist \(folder + plistPath)")
         }
         return dictionary
     }
@@ -50,7 +50,7 @@ public struct ProjectInfo: CustomStringConvertible {
         }
         let plist = try plistDict()
         guard let version = plist["CFBundleShortVersionString"] as? String else {
-            fail("Project version not found.")
+            throw SwiftInfoError.generic("Project version not found.")
         }
         return version
     }
@@ -61,7 +61,7 @@ public struct ProjectInfo: CustomStringConvertible {
         }
         let plist = try plistDict()
         guard let version = plist["CFBundleVersion"] as? String else {
-            fail("Project build number not found.")
+            throw SwiftInfoError.generic("Project build number not found.")
         }
         return version
     }
