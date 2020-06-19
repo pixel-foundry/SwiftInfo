@@ -10,8 +10,7 @@ extension SwiftInfo {
         let projectInfo = ProjectInfo(xcodeproj: "Mock.xcproject",
                                       target: "Mock",
                                       configuration: "Mock-Debug",
-                                      fileUtils: fileUtils,
-                                      plistExtractor: MockPlistExtractor())
+                                      fileUtils: fileUtils)
         let plist = NSDictionary(dictionary: ["CFBundleShortVersionString": "1.0",
                                               "CFBundleVersion": "1"])
         fileManager.add(plist: plist, file: "./Info.plist")
