@@ -28,22 +28,12 @@ public struct FileUtils {
         self.fileOpener = fileOpener
     }
 
-    /// The working path that is containing the SwiftInfo binary.
+    /// The working path that contains the SwiftInfo binary.
     public var toolFolder: String {
-        guard let executablePath = ProcessInfo.processInfo.arguments.first else {
+        guard let executablePath = Bundle.main.executablePath else {
             fail("Couldn't determine the folder that's running SwiftInfo.")
         }
-
-        let executableUrl = URL(fileURLWithPath: executablePath)
-        #if os(Linux)
-        return executableUrl.deletingLastPathComponent().path
-        #else
-        if let isAliasFile = try! executableUrl.resourceValues(forKeys: [URLResourceKey.isAliasFileKey]).isAliasFile, isAliasFile {
-            return try! URL(resolvingAliasFileAt: executableUrl).deletingLastPathComponent().path
-        } else {
-            return executableUrl.deletingLastPathComponent().path
-        }
-        #endif
+        return executablePath
     }
 
     /// The path where Infofile.swift is located.
