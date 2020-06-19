@@ -33,7 +33,7 @@ public struct FileUtils {
         guard let executablePath = Bundle.main.executablePath else {
             fail("Couldn't determine the folder that's running SwiftInfo.")
         }
-        return executablePath
+        return URL(fileURLWithPath: executablePath, isDirectory: false).deletingLastPathComponent().path
     }
 
     /// The path where Infofile.swift is located.
