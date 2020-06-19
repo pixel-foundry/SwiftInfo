@@ -10,7 +10,7 @@ let package = Package(
         .executable(name: "swiftinfo", targets: ["SwiftInfo"])
     ],
     dependencies: [
-        .package(url: "https://github.com/tuist/xcodeproj.git", .exact("7.8.0"))
+        .package(url: "https://github.com/pixel-foundry/xcodeproj.git", .branch("master"))
     ],
     targets: [
         // Csourcekitd: C modules wrapper for sourcekitd.
