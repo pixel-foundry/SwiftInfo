@@ -15,6 +15,8 @@ public struct Main {
         log("Infofile Path: \(try! fileUtils.infofileFolder())", verbose: true)
         log("Toolchain Path: \(toolchainPath)", verbose: true)
 
+        throw SwiftInfoError.generic("Tool folder: \(fileUtils.toolFolder)")
+
         let processInfoArgs = ProcessInfo.processInfo.arguments
         let args = Runner.getCoreSwiftCArguments(fileUtils: fileUtils,
                                                  toolchainPath: toolchainPath,
