@@ -5,6 +5,7 @@ public enum Runner {
                                               toolchainPath: String,
                                               processInfoArgs: [String]) -> [String] {
         let include = fileUtils.toolFolder + "/../include/swiftinfo"
+        fatalError(include)
         return [
             "swiftc",
             "--driver-mode=swift", // Don't generate a binary, just run directly.
