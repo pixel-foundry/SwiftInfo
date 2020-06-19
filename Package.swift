@@ -9,9 +9,6 @@ let package = Package(
         .library(name: "SwiftInfoCore", type: .dynamic, targets: ["SwiftInfoCore"]),
         .executable(name: "swiftinfo", targets: ["SwiftInfo"])
     ],
-    dependencies: [
-        .package(url: "https://github.com/pixel-foundry/xcodeproj.git", .branch("master"))
-    ],
     targets: [
         // Csourcekitd: C modules wrapper for sourcekitd.
         .target(
@@ -21,7 +18,7 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "SwiftInfoCore",
-            dependencies: ["Csourcekitd", "XcodeProj"]),
+            dependencies: ["Csourcekitd"]),
         .target(
             name: "SwiftInfo",
             dependencies: ["SwiftInfoCore"]),
