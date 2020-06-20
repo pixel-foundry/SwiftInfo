@@ -37,9 +37,15 @@ public struct ProjectInfo: CustomStringConvertible {
     }
 
     func plistDict() throws -> [String: Any] {
-        let folder = try fileUtils.infofileFolder()
-        guard let dictionary = fileUtils.fileOpener.plistContents(ofPath: folder + plistPath) else {
-            throw SwiftInfoError.generic("Failed to load plist \(folder + plistPath)")
+        let path: String
+        if let folder = try? fileUtils.infofileFolder() {
+            path = folder + plistPath
+        } else {
+            path = plistPath
+        }
+        guard let dictionary = fileUtils.fileOpener.plistContents(ofPath: path) ??
+            fileUtils.fileOpener.plistContents(ofPath: plistPath) else {
+            throw SwiftInfoError.generic("Failed to load plist \(path)")
         }
         return dictionary
     }
