@@ -33,7 +33,7 @@ public struct ProjectInfo: CustomStringConvertible {
         self.versionString = versionString
         self.buildNumber = buildNumber
         self.fileUtils = fileUtils
-        self.plistPath = plistPath ?? ""
+        self.plistPath = plistPath ?? fileUtils.parsePlistFromBuildLog(target: target) ?? ""
     }
 
     func plistDict() throws -> [String: Any] {

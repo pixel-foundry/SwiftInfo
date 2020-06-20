@@ -132,6 +132,15 @@ public struct FileUtils {
                                          attributes: nil)
         try fileOpener.write(data: json, toUrl: path)
     }
+
+    func parsePlistFromBuildLog(target: String) -> String? {
+        guard let log = try? buildLog() else { return nil }
+        let pattern = #"ProcessInfoPlistFile [\s\S]+ (\/[\s\S]+.plist) \(in target '\#(target)' from project"#
+        let match = log.matchResults(regex: pattern)
+        let infoPlistPath = match.compactMap { $0.captureGroup(0, originalString: log) }.first
+        SwiftInfoCore.log(infoPlistPath ?? log.match(regex: pattern).first ?? "")
+        return infoPlistPath
+    }
 }
 
 public enum SwiftInfoError: Error, LocalizedError {
