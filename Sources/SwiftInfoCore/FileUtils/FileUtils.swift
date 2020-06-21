@@ -135,10 +135,9 @@ public struct FileUtils {
 
     func parsePlistFromBuildLog(target: String) -> String? {
         guard let log = try? buildLog() else { return nil }
-        let pattern = #"ProcessInfoPlistFile [^\n]+ (\/[^\n]+.plist) \(in target 'Quartz' from project '[^\n]+'\)"#
+        let pattern = #"ProcessInfoPlistFile [^\n]+ (\/[^\n]+.plist) \(in target '\#(target)' from project '[^\n]+'\)"#
         let match = log.matchResults(regex: pattern)
         let infoPlistPath = match.compactMap { $0.captureGroup(1, originalString: log) }.first
-        SwiftInfoCore.log("Found Info.plist path: \(infoPlistPath)")
         return infoPlistPath
     }
 }
