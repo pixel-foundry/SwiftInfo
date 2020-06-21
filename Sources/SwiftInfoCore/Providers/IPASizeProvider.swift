@@ -20,15 +20,12 @@ public struct IPASizeProvider: InfoProvider {
         let infofileFolder = try fileUtils.infofileFolder()
         let enumerator = FileManager.default.enumerator(
             at: URL(fileURLWithPath: infofileFolder),
-            includingPropertiesForKeys: [.typeIdentifierKey],
+            includingPropertiesForKeys: [],
             options: [.skipsPackageDescendants, .skipsHiddenFiles]
         )
         var ipa: URL?
         while let file = enumerator?.nextObject() as? URL {
-            guard let identifier = try? file.resourceValues(
-                forKeys: [.typeIdentifierKey]
-            ).typeIdentifier else { continue }
-            if identifier == "com.apple.itunes.ipa" {
+            if file.pathExtension  == "ipa" {
                 ipa = file
                 break
             }
