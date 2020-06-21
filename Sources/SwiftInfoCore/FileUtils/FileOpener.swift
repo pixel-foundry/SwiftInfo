@@ -10,12 +10,12 @@ open class FileOpener {
     }
 
     open func plistContents(ofPath path: String) -> [String: Any]? {
-        var plistFormat = PropertyListSerialization.PropertyListFormat.binary
-        guard let plistData = FileManager.default.contents(atPath: path) else { return nil }
+        SwiftInfoCore.log(path)
+        guard let plistData = FileManager.default.contents(atPath: path) else { fatalError("Couldn't load Plist from \(path)") }
         guard let plist = try? PropertyListSerialization.propertyList(
             from: plistData,
             options: [],
-            format: &plistFormat
+            format: nil
         ) else {
             return nil
         }
