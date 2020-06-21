@@ -18,12 +18,25 @@ public struct IPASizeProvider: InfoProvider {
     public static func extract(fromApi api: SwiftInfo, args _: Args?) throws -> IPASizeProvider {
         let fileUtils = api.fileUtils
         let infofileFolder = try fileUtils.infofileFolder()
-        let buildFolder = infofileFolder + "build/"
-        let contents = try fileUtils.fileManager.contentsOfDirectory(atPath: buildFolder)
-        guard let ipa = contents.first(where: { $0.hasSuffix(".ipa") }) else {
-            throw error(".ipa not found! Attempted to find .ipa at: \(buildFolder)")
+        let enumerator = FileManager.default.enumerator(
+            at: URL(fileURLWithPath: infofileFolder),
+            includingPropertiesForKeys: [.typeIdentifierKey],
+            options: [.skipsPackageDescendants, .skipsHiddenFiles]
+        )
+        var ipa: URL?
+        while let file = enumerator?.nextObject() as? URL {
+            guard let identifier = try? file.resourceValues(
+                forKeys: [.typeIdentifierKey]
+            ).typeIdentifier else { continue }
+            if identifier == "com.apple.itunes.ipa" {
+                ipa = file
+                break
+            }
         }
-        let attributes = try fileUtils.fileManager.attributesOfItem(atPath: buildFolder + ipa)
+        guard let ipaFile = ipa else {
+            throw error(".ipa not found! Attempted to find .ipa in: \(infofileFolder)")
+        }
+        let attributes = try fileUtils.fileManager.attributesOfItem(atPath: ipaFile.path)
         let fileSize = Int(attributes[.size] as? UInt64 ?? 0)
         return IPASizeProvider(size: fileSize)
     }
