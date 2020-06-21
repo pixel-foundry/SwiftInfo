@@ -34,6 +34,7 @@ public struct ProjectInfo: CustomStringConvertible {
         self.buildNumber = buildNumber
         self.fileUtils = fileUtils
         self.plistPath = plistPath ?? fileUtils.parsePlistFromBuildLog(target: target) ?? ""
+        SwiftInfoCore.log("plistPath: \(self.plistPath)")
     }
 
     func plistDict() throws -> [String: Any] {

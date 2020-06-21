@@ -138,6 +138,7 @@ public struct FileUtils {
         let pattern = #"ProcessInfoPlistFile [^\n]+ (\/[^\n]+.plist) \(in target 'Quartz' from project '[^\n]+'\)"#
         let match = log.matchResults(regex: pattern)
         let infoPlistPath = match.compactMap { $0.captureGroup(1, originalString: log) }.first
+        SwiftInfoCore.log("Found Info.plist path: \(infoPlistPath)")
         return infoPlistPath
     }
 }
