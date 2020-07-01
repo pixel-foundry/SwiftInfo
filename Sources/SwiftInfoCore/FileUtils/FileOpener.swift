@@ -10,7 +10,6 @@ open class FileOpener {
     }
 
     open func plistContents(ofPath path: String) -> [String: Any]? {
-        SwiftInfoCore.log(path)
         guard let plistData = FileManager.default.contents(atPath: path) else { return nil }
         guard let plist = try? PropertyListSerialization.propertyList(
             from: plistData,
