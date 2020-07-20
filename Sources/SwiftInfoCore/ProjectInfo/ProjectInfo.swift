@@ -15,7 +15,7 @@ public struct ProjectInfo: CustomStringConvertible {
         do {
             version = "\(try getVersionString()) (\(try getBuildNumber()))"
         } catch {
-            version = "(Failed to retrieve version info)"
+            version = "(Failed to retrieve version info: \(error.localizedDescription))"
         }
         return "\(target) \(version) - \(configuration)"
     }

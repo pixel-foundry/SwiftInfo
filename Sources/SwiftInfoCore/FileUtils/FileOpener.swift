@@ -11,14 +11,17 @@ open class FileOpener {
 
     open func plistContents(ofPath path: String) -> [String: Any]? {
         guard let plistData = FileManager.default.contents(atPath: path) else { return nil }
-        guard let plist = try? PropertyListSerialization.propertyList(
-            from: plistData,
-            options: [],
-            format: nil
-        ) else {
+        do {
+            let plist = try PropertyListSerialization.propertyList(
+                from: plistData,
+                options: [],
+                format: nil
+            )
+            return plist as? [String: Any]
+        } catch {
+            print(error)
             return nil
         }
-        return plist as? [String: Any]
     }
 
     open func write(data: Data, toUrl url: URL) throws {
