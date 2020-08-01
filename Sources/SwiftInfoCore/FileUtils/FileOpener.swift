@@ -19,7 +19,6 @@ open class FileOpener {
             )
             return plist as? [String: Any]
         } catch {
-            print(error)
             return nil
         }
     }
